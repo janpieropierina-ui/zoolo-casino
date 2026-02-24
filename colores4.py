@@ -2160,3 +2160,4 @@ if __name__ == '__main__':
     print(f"  Admin: usuario=admin  password=admin123")
     print("="*55)
     app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
+
