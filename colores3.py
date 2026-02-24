@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """
-ZOOLO CASINO LOCAL v2.1 — Layout Compacto
-Animales izquierda | Controles derecha
-Colores exactos por animal
+ZOOLO CASINO LOCAL v2.3 — Layout Compacto con Tripleta en Modal
+Animales izquierda | Controles derecha | Tripleta en modal
 """
 
 import os, json, csv, io, sqlite3
@@ -831,16 +830,16 @@ html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:14px;display:flex;flex-direction:column}
 
 /* ===== TOPBAR ===== */
-.topbar{background:var(--panel);border-bottom:2px solid var(--border);padding:0 10px;height:36px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar{background:#0d1428;border-bottom:2px solid #f5a623;padding:0 10px;height:36px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .brand{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:2px;color:#fff}
 .brand em{color:var(--gold);font-style:normal}
-.agent-name{color:var(--text2);font-size:.78rem;letter-spacing:1px;margin-left:10px}
-.top-right{display:flex;align-items:center;gap:6px}
-.clock{color:var(--gold);font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:1px}
-.tbtn{padding:4px 10px;border:1px solid var(--border);background:var(--card);color:var(--text2);border-radius:3px;cursor:pointer;font-size:.72rem;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;transition:all .2s;white-space:nowrap}
-.tbtn:hover{border-color:var(--teal);color:var(--teal)}
-.tbtn.exit{border-color:#6b1515;color:#e05050}
-.tbtn.exit:hover{background:var(--red-bg)}
+.agent-name{color:#8ab0e0;font-size:.78rem;letter-spacing:1px;margin-left:10px}
+.top-right{display:flex;align-items:center;gap:5px}
+.clock{color:var(--gold);font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:1px;background:#1a2040;padding:3px 8px;border-radius:3px;border:1px solid #2a3a60}
+.tbtn{padding:5px 10px;border:none;background:#1e3060;color:#90c0ff;border-radius:3px;cursor:pointer;font-size:.72rem;font-family:'Rajdhani',sans-serif;font-weight:700;letter-spacing:1px;transition:all .2s;white-space:nowrap}
+.tbtn:hover{background:#2a4a90;color:#fff}
+.tbtn.exit{background:#8b1515;color:#fff}
+.tbtn.exit:hover{background:#b01818}
 
 /* ===== LAYOUT PRINCIPAL ===== */
 .layout{display:flex;flex:1;overflow:hidden;gap:0}
@@ -850,15 +849,19 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
 
 /* Especiales arriba */
 .especiales-bar{display:flex;gap:4px;padding:5px 6px;background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0}
-.esp-btn{flex:1;padding:7px 4px;text-align:center;border-radius:4px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:1px;border:2px solid transparent;transition:all .2s}
-.esp-btn.rojo{background:#1a0a0a;border-color:#8b2020;color:#e05050}
-.esp-btn.rojo.sel,  .esp-btn.rojo:hover{background:#3a0d0d;border-color:var(--red);color:#ff6b6b}
-.esp-btn.negro{background:#0a0e18;border-color:#1a2a5a;color:#6080c0}
-.esp-btn.negro.sel, .esp-btn.negro:hover{background:#0d1530;border-color:var(--blue);color:#90b0ff}
-.esp-btn.par{background:#050e10;border-color:#0a4050;color:#00a0b4}
-.esp-btn.par.sel,   .esp-btn.par:hover{background:#051418;border-color:var(--teal);color:#00d4f8}
-.esp-btn.impar{background:#100a18;border-color:#4a1a80;color:#9060d0}
-.esp-btn.impar.sel, .esp-btn.impar:hover{background:#180d28;border-color:var(--purple);color:#c080ff}
+.esp-btn{flex:1;padding:7px 4px;text-align:center;border-radius:4px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:1px;border:2px solid transparent;transition:all .15s}
+.esp-btn.rojo{background:#cc1a1a;border-color:#ff2a2a;color:#fff}
+.esp-btn.rojo.sel{background:#ff1a1a;border-color:#ff6060;box-shadow:0 0 12px rgba(255,40,40,.5)}
+.esp-btn.rojo:hover{background:#e02020;border-color:#ff4040}
+.esp-btn.negro{background:#1a2a5a;border-color:#2a4090;color:#c0d8ff}
+.esp-btn.negro.sel{background:#2a3a80;border-color:#4060d0;box-shadow:0 0 12px rgba(60,100,240,.5)}
+.esp-btn.negro:hover{background:#223070;border-color:#3050c0}
+.esp-btn.par{background:#0a7a90;border-color:#00c4d8;color:#fff}
+.esp-btn.par.sel{background:#00a0c0;border-color:#00e8ff;box-shadow:0 0 12px rgba(0,200,220,.5)}
+.esp-btn.par:hover{background:#0a8aa0;border-color:#00d0e8}
+.esp-btn.impar{background:#6a20a0;border-color:#9a40d0;color:#fff}
+.esp-btn.impar.sel{background:#8030c0;border-color:#c060ff;box-shadow:0 0 12px rgba(160,80,240,.5)}
+.esp-btn.impar:hover{background:#7a28b0;border-color:#b050e8}
 
 /* Grid animales */
 .animals-scroll{flex:1;overflow-y:auto;padding:4px 5px}
@@ -869,32 +872,32 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
 .acard:active{transform:scale(.92)}
 
 /* VERDE */
-.acard.cv{background:#051209;border-color:#0d4d1e}
-.acard.cv .anum{color:#4ade80}
-.acard.cv .anom{color:#166534}
-.acard.cv:hover{background:#071a0e;border-color:#16a34a}
-.acard.cv.sel{background:#0a2e14;border-color:var(--green);box-shadow:0 0 8px rgba(34,197,94,.3)}
+.acard.cv{background:#0d5c1e;border-color:#16a34a}
+.acard.cv .anum{color:#bbf7d0}
+.acard.cv .anom{color:#86efac}
+.acard.cv:hover{background:#157028;border-color:#22c55e}
+.acard.cv.sel{background:#15803d;border-color:#4ade80;box-shadow:0 0 8px rgba(34,197,94,.5)}
 
 /* ROJO */
-.acard.cr{background:#1a0808;border-color:#6b1515}
-.acard.cr .anum{color:#f87171}
-.acard.cr .anom{color:#7f1d1d}
-.acard.cr:hover{background:#220d0d;border-color:var(--red)}
-.acard.cr.sel{background:#2d1010;border-color:#ef4444;box-shadow:0 0 8px rgba(239,68,68,.3)}
+.acard.cr{background:#8b1a1a;border-color:#dc2626}
+.acard.cr .anum{color:#fecaca}
+.acard.cr .anom{color:#fca5a5}
+.acard.cr:hover{background:#a81f1f;border-color:#ef4444}
+.acard.cr.sel{background:#b91c1c;border-color:#ff4444;box-shadow:0 0 8px rgba(220,38,38,.5)}
 
 /* NEGRO */
-.acard.cn{background:#080c18;border-color:#1a2540}
-.acard.cn .anum{color:#93c5fd}
-.acard.cn .anom{color:#1e3a5f}
-.acard.cn:hover{background:#0c1228;border-color:#2060c0}
-.acard.cn.sel{background:#0e1a38;border-color:var(--blue);box-shadow:0 0 8px rgba(32,96,208,.3)}
+.acard.cn{background:#162040;border-color:#2a4080}
+.acard.cn .anum{color:#bfdbfe}
+.acard.cn .anom{color:#93c5fd}
+.acard.cn:hover{background:#1e2a58;border-color:#3b60b0}
+.acard.cn.sel{background:#1e3a6a;border-color:#60a0ff;box-shadow:0 0 8px rgba(96,160,255,.5)}
 
-/* LECHUZA (40) negro especial */
-.acard.cl{background:#100c04;border-color:#4a3a08}
-.acard.cl .anum{color:#fbbf24}
-.acard.cl .anom{color:#78470a}
-.acard.cl:hover{background:#180e04;border-color:var(--gold)}
-.acard.cl.sel{background:#201206;border-color:var(--gold);box-shadow:0 0 10px rgba(245,166,35,.3)}
+/* LECHUZA (40) */
+.acard.cl{background:#6b4a08;border-color:#d97706}
+.acard.cl .anum{color:#fef3c7}
+.acard.cl .anom{color:#fde68a}
+.acard.cl:hover{background:#845c0a;border-color:#f59e0b}
+.acard.cl.sel{background:#92400e;border-color:#fbbf24;box-shadow:0 0 10px rgba(245,166,35,.5)}
 
 .acard.sel::after{content:'✓';position:absolute;top:0;right:2px;font-size:.55rem;color:rgba(255,255,255,.8);font-weight:700}
 .anum{font-size:.85rem;font-weight:700;font-family:'Oswald',sans-serif;line-height:1}
@@ -909,113 +912,119 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
 
 /* HORARIOS */
 .horas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
-.hbtn{padding:5px 2px;text-align:center;background:var(--card);border:1px solid var(--border);border-radius:3px;cursor:pointer;font-size:.68rem;font-family:'Oswald',sans-serif;color:var(--text2);transition:all .2s;line-height:1.2}
-.hbtn.sel{background:#0a1828;border-color:var(--teal);color:var(--teal)}
-.hbtn.bloq{opacity:.3;cursor:not-allowed;text-decoration:line-through}
-.hbtn .hperu{font-size:.65rem;font-weight:600}
-.hbtn .hven{font-size:.55rem;color:var(--text2)}
-.hbtn.sel .hven{color:#005570}
+.hbtn{padding:5px 2px;text-align:center;background:#162040;border:2px solid #2a4080;border-radius:3px;cursor:pointer;font-size:.68rem;font-family:'Oswald',sans-serif;color:#a0c0ff;transition:all .15s;line-height:1.2}
+.hbtn:hover{background:#1e2e60;border-color:#4080d0}
+.hbtn.sel{background:#006080;border-color:#00c8e8;color:#fff;font-weight:700}
+.hbtn.bloq{background:#180a0a;border-color:#4a1010;color:#5a2020;cursor:not-allowed;text-decoration:line-through;opacity:.6}
+.hbtn .hperu{font-size:.65rem;font-weight:700}
+.hbtn .hven{font-size:.55rem;color:#608090}
+.hbtn.sel .hven{color:#80d0e8}
 .horas-btns-row{display:flex;gap:3px;margin-top:3px}
-.hsel-btn{flex:1;padding:3px;font-size:.62rem;background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:3px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:1px;text-align:center}
-.hsel-btn:hover{border-color:var(--teal);color:var(--teal)}
-
-/* TRIPLETA */
-.trip-sec{padding:5px 8px;border-bottom:1px solid var(--border)}
-.trip-label{font-family:'Oswald',sans-serif;font-size:.65rem;color:var(--purple);letter-spacing:2px;margin-bottom:4px}
-.trip-slots{display:flex;gap:3px;margin-bottom:4px}
-.tslot{flex:1;background:var(--card);border:1px solid #3a1a60;border-radius:3px;padding:4px 2px;text-align:center;cursor:pointer;min-height:36px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.tslot.act{border-color:var(--purple);box-shadow:0 0 8px rgba(168,85,247,.2)}
-.tslot.fill{border-color:#7c3aed;background:#120a20}
-.tslot .snum{font-size:.72rem;font-weight:700;font-family:'Oswald',sans-serif;color:#c084fc}
-.tslot .snom{font-size:.55rem;color:#7c3aed}
-.tslot .sph{font-size:.6rem;color:#3a2060;letter-spacing:1px}
-.trip-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;max-height:80px;overflow-y:auto}
-.trip-grid .acard{padding:2px 1px}
-.trip-grid .anum{font-size:.72rem}
-.trip-grid .anom{font-size:.48rem}
+.hsel-btn{flex:1;padding:4px;font-size:.65rem;background:#1a3050;border:2px solid #2a5080;color:#80b0e0;border-radius:3px;cursor:pointer;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px;text-align:center;transition:all .15s}
+.hsel-btn:hover{background:#006080;border-color:#00b8d8;color:#fff}
 
 /* MONTO */
 .monto-sec{padding:5px 8px;border-bottom:1px solid var(--border)}
 .presets{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px}
-.mpre{padding:5px 8px;background:var(--card);border:1px solid var(--border);border-radius:3px;color:var(--text2);cursor:pointer;font-size:.75rem;font-family:'Oswald',sans-serif;font-weight:600;transition:all .2s}
-.mpre:hover,.mpre:active{background:#0a1828;border-color:var(--teal);color:var(--teal)}
+.mpre{padding:5px 9px;background:#1a3050;border:2px solid #2a5080;border-radius:3px;color:#a0d0ff;cursor:pointer;font-size:.78rem;font-family:'Oswald',sans-serif;font-weight:700;transition:all .15s}
+.mpre:hover,.mpre:active{background:#006080;border-color:#00c0e0;color:#fff}
 .monto-input-wrap{display:flex;align-items:center;gap:4px}
-.monto-label{color:var(--text2);font-size:.72rem;letter-spacing:1px;white-space:nowrap}
-.monto-input{flex:1;padding:7px 8px;background:#060e1e;border:1px solid var(--border);border-radius:3px;color:var(--gold);font-size:1rem;font-family:'Oswald',sans-serif;font-weight:700;text-align:center;letter-spacing:1px}
-.monto-input:focus{outline:none;border-color:var(--gold)}
+.monto-label{color:#f5a623;font-size:.85rem;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:1px;white-space:nowrap}
+.monto-input{flex:1;padding:7px 8px;background:#0a1828;border:2px solid #d97706;border-radius:3px;color:#fbbf24;font-size:1.1rem;font-family:'Oswald',sans-serif;font-weight:700;text-align:center;letter-spacing:1px}
+.monto-input:focus{outline:none;border-color:#fbbf24;box-shadow:0 0 8px rgba(251,191,36,.3)}
 
 /* TICKET */
 .ticket-sec{padding:4px 8px;border-bottom:1px solid var(--border);flex:1;display:flex;flex-direction:column;min-height:0}
 .ticket-list{flex:1;overflow-y:auto;min-height:40px}
-.ti{display:flex;align-items:center;gap:3px;padding:3px 4px;border-bottom:1px solid #0a1020;font-size:.72rem}
-.ti-desc{flex:1;color:#90a8d0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ti-hora{color:var(--teal);font-size:.65rem;min-width:38px;font-family:'Oswald',sans-serif}
-.ti-monto{color:var(--green);font-weight:700;font-family:'Oswald',sans-serif;min-width:32px;text-align:right}
-.ti-del{background:transparent;border:none;color:#6b1515;cursor:pointer;font-size:.7rem;padding:0 2px;line-height:1}
-.ti-del:hover{color:var(--red)}
-.ticket-empty{color:#1e2a40;text-align:center;padding:8px;font-size:.72rem;letter-spacing:2px}
-.ticket-total{text-align:right;padding:4px 0 2px;font-family:'Oswald',sans-serif;color:var(--gold);font-size:.95rem;font-weight:700;letter-spacing:1px;border-top:1px solid var(--border)}
+.ti{display:flex;align-items:center;gap:3px;padding:3px 4px;border-bottom:1px solid #0a1828;font-size:.72rem}
+.ti-desc{flex:1;color:#c0d8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ti-hora{color:#00c8e8;font-size:.65rem;min-width:38px;font-family:'Oswald',sans-serif;font-weight:700}
+.ti-monto{color:#22c55e;font-weight:700;font-family:'Oswald',sans-serif;min-width:32px;text-align:right}
+.ti-del{background:#6b1515;border:none;color:#fff;cursor:pointer;font-size:.65rem;padding:2px 4px;line-height:1;border-radius:2px}
+.ti-del:hover{background:#b01818}
+.ticket-empty{color:#2a4060;text-align:center;padding:8px;font-size:.72rem;letter-spacing:2px}
+.ticket-total{text-align:right;padding:4px 0 2px;font-family:'Oswald',sans-serif;color:#fbbf24;font-size:.95rem;font-weight:700;letter-spacing:1px;border-top:2px solid #d97706}
 
 /* BOTONES ACCION */
 .actions-sec{padding:5px 8px;display:flex;flex-direction:column;gap:3px;flex-shrink:0}
-.btn-add{width:100%;padding:8px;background:linear-gradient(135deg,#0d2a60,#091d48);color:#7ab0ff;border:1px solid #1a3a80;border-radius:4px;font-family:'Oswald',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:2px;cursor:pointer;transition:all .2s}
-.btn-add:hover{background:linear-gradient(135deg,#1240a0,#0d2a70);color:#aad0ff}
-.btn-wa{width:100%;padding:8px;background:linear-gradient(135deg,#064020,#042a14);color:#4ade80;border:1px solid #0d5a2a;border-radius:4px;font-family:'Oswald',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:2px;cursor:pointer;transition:all .2s}
-.btn-wa:hover{background:linear-gradient(135deg,#0a5c2a,#063c18)}
-.btn-wa:disabled{opacity:.5;cursor:not-allowed}
+.btn-add{width:100%;padding:9px;background:#1a3a90;color:#fff;border:2px solid #4070d0;border-radius:4px;font-family:'Oswald',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:2px;cursor:pointer;transition:all .15s}
+.btn-add:hover{background:#2050c0;border-color:#60a0ff}
+.btn-wa{width:100%;padding:9px;background:#166534;color:#fff;border:2px solid #22c55e;border-radius:4px;font-family:'Oswald',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:2px;cursor:pointer;transition:all .15s}
+.btn-wa:hover{background:#15803d;border-color:#4ade80}
+.btn-wa:disabled{background:#0f2e1a;border-color:#1a4a28;color:#2a6038;cursor:not-allowed}
 .btns-row{display:grid;grid-template-columns:1fr 1fr;gap:3px}
 .btns-row2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px}
-.abtn{padding:7px 4px;text-align:center;border-radius:4px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:1px;border:1px solid var(--border);background:var(--card);color:var(--text2);transition:all .2s;white-space:nowrap}
-.abtn:hover{border-color:var(--teal);color:var(--teal)}
-.abtn.res{border-color:#0a4050;color:var(--teal)}
-.abtn.caja{border-color:#0d4d1e;color:var(--green)}
-.abtn.pagar{border-color:#805010;color:var(--gold)}
-.abtn.trip{border-color:#4a1a80;color:var(--purple)}
-.abtn.anular{border-color:#6b1515;color:#e05050}
-.abtn.borrar{border-color:#3a2010;color:#c06030}
-.abtn.salir{border-color:#6b1515;color:#e05050;background:var(--red-bg)}
+.abtn{padding:8px 4px;text-align:center;border-radius:4px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:1px;border:2px solid;transition:all .15s;white-space:nowrap;color:#fff}
+.abtn.res{background:#006080;border-color:#00b8d8}
+.abtn.res:hover{background:#0080a8;border-color:#00e0ff}
+.abtn.caja{background:#166534;border-color:#22c55e}
+.abtn.caja:hover{background:#15803d;border-color:#4ade80}
+.abtn.pagar{background:#854d0e;border-color:#f59e0b}
+.abtn.pagar:hover{background:#a16207;border-color:#fbbf24}
+.abtn.trip{background:#6b21a8;border-color:#a855f7}
+.abtn.trip:hover{background:#7e22ce;border-color:#c084fc}
+.abtn.anular{background:#991b1b;border-color:#ef4444}
+.abtn.anular:hover{background:#b91c1c;border-color:#ff6060}
+.abtn.borrar{background:#7c2d12;border-color:#f97316}
+.abtn.borrar:hover{background:#9a3412;border-color:#fb923c}
+.abtn.salir{background:#7f1d1d;border-color:#dc2626}
+.abtn.salir:hover{background:#991b1b;border-color:#ef4444}
 
 /* MODALES */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;overflow-y:auto;padding:8px;align-items:flex-start;justify-content:center}
 .modal.open{display:flex}
-.mc{background:#080e1c;border:1px solid var(--border);border-radius:6px;width:100%;max-width:600px;margin:auto;overflow:hidden}
-.mh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border);background:#060a14}
-.mh h3{font-family:'Oswald',sans-serif;color:var(--teal);font-size:.9rem;letter-spacing:2px}
+.mc{background:#080e1c;border:1px solid #1a2a50;border-radius:6px;width:100%;max-width:640px;margin:auto;overflow:hidden}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:2px solid #00b4d8;background:#050a14}
+.mh h3{font-family:'Oswald',sans-serif;color:#00d8ff;font-size:.9rem;letter-spacing:2px}
 .mbody{padding:14px 16px}
-.btn-close{background:transparent;color:var(--text2);border:1px solid var(--border);border-radius:3px;padding:4px 10px;cursor:pointer;font-size:.78rem}
-.btn-close:hover{color:#fff}
+.btn-close{background:#7f1d1d;color:#fff;border:2px solid #dc2626;border-radius:3px;padding:5px 12px;cursor:pointer;font-size:.78rem;font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:1px}
+.btn-close:hover{background:#991b1b}
 .frow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.frow input,.frow select{flex:1;min-width:110px;padding:8px 10px;background:#060e1e;border:1px solid var(--border);border-radius:3px;color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:.85rem}
-.frow input:focus,.frow select:focus{outline:none;border-color:var(--teal)}
-.btn-q{width:100%;padding:10px;background:linear-gradient(135deg,#0d2a60,#091d48);color:#7ab0ff;border:1px solid #1a3a80;border-radius:3px;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:2px;cursor:pointer;margin-bottom:8px;font-size:.8rem}
-.ri{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;margin:4px 0;background:#060a14;border-radius:3px;border-left:2px solid #1a2540;font-size:.82rem}
-.ri.ok{border-left-color:var(--green)}
-.ri-hora{color:var(--gold);font-weight:700;font-family:'Oswald',sans-serif;font-size:.82rem}
-.ri-animal{color:var(--green);font-weight:600}
-.tcard{background:#060a14;padding:10px;margin:5px 0;border-radius:4px;border-left:2px solid #1a2540;font-size:.8rem}
-.tcard.gano{border-left-color:var(--green)}
-.tcard.pte{border-left-color:#c08020}
-.ts{color:var(--teal);font-weight:700;font-family:'Oswald',sans-serif}
-.badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:.68rem;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:1px}
-.badge.p{background:#0a2a14;color:var(--green);border:1px solid #0d5a2a}
-.badge.g{background:#3a2a08;color:var(--gold);border:1px solid #8a5a0a}
-.badge.n{background:#0a0e18;color:var(--text2);border:1px solid var(--border)}
-.jrow{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;margin:2px 0;border-radius:3px;background:#050810;border-left:2px solid #1a2540;font-size:.78rem}
-.jrow.gano{background:rgba(34,197,94,.06);border-left-color:var(--green)}
-.sbox{background:#060a14;border-radius:3px;padding:10px;margin:6px 0;border:1px solid var(--border)}
-.srow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0a0e18;font-size:.8rem}
+.frow input,.frow select{flex:1;min-width:110px;padding:8px 10px;background:#0a1828;border:2px solid #2a4a80;border-radius:3px;color:#fbbf24;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600}
+.frow input:focus,.frow select:focus{outline:none;border-color:#00b4d8;box-shadow:0 0 8px rgba(0,180,216,.2)}
+.btn-q{width:100%;padding:10px;background:#1a3a90;color:#fff;border:2px solid #4070d0;border-radius:3px;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:2px;cursor:pointer;margin-bottom:8px;font-size:.82rem;transition:all .15s}
+.btn-q:hover{background:#2050c0;border-color:#60a0ff}
+.ri{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;margin:4px 0;background:#0a1020;border-radius:3px;border-left:3px solid #1a2a50;font-size:.82rem}
+.ri.ok{border-left-color:#22c55e;background:#050f08}
+.ri-hora{color:#fbbf24;font-weight:700;font-family:'Oswald',sans-serif;font-size:.82rem}
+.ri-animal{color:#4ade80;font-weight:700}
+.tcard{background:#060c1a;padding:10px;margin:5px 0;border-radius:4px;border-left:3px solid #1a2a50;font-size:.8rem}
+.tcard.gano{border-left-color:#22c55e;background:#040f08}
+.tcard.pte{border-left-color:#f59e0b;background:#0a0800}
+.ts{color:#00d8ff;font-weight:700;font-family:'Oswald',sans-serif}
+.badge{display:inline-block;padding:3px 8px;border-radius:3px;font-size:.68rem;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:1px;color:#fff}
+.badge.p{background:#166534;border:2px solid #22c55e}
+.badge.g{background:#854d0e;border:2px solid #f59e0b}
+.badge.n{background:#1e3050;border:2px solid #4080c0}
+.jrow{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;margin:2px 0;border-radius:3px;background:#070d1a;border-left:3px solid #1a2a50;font-size:.78rem}
+.jrow.gano{background:#040d06;border-left-color:#22c55e}
+.trip-row{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;margin:2px 0;border-radius:3px;background:#0d0620;border-left:3px solid #6b21a8;font-size:.78rem}
+.trip-row.gano{background:#060418;border-left-color:#c084fc}
+.sbox{background:#060c1a;border-radius:3px;padding:10px;margin:6px 0;border:1px solid #1a2a50}
+.srow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0a1020;font-size:.8rem}
 .srow:last-child{border-bottom:none}
-.sl{color:var(--text2)}.sv{color:var(--gold);font-weight:700;font-family:'Oswald',sans-serif}
+.sl{color:#6090c0}.sv{color:#fbbf24;font-weight:700;font-family:'Oswald',sans-serif}
 .caja-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-.cg{background:#060a14;border:1px solid var(--border);border-radius:3px;padding:12px;text-align:center}
-.cgl{color:var(--text2);font-size:.68rem;letter-spacing:2px;margin-bottom:4px}
-.cgv{color:var(--gold);font-size:1.1rem;font-weight:700;font-family:'Oswald',sans-serif}
-.cgv.g{color:var(--green)}.cgv.r{color:var(--red)}
+.cg{background:#060c1a;border:2px solid #1a2a50;border-radius:3px;padding:12px;text-align:center}
+.cgl{color:#6090c0;font-size:.68rem;letter-spacing:2px;margin-bottom:4px;font-family:'Oswald',sans-serif}
+.cgv{color:#fbbf24;font-size:1.1rem;font-weight:700;font-family:'Oswald',sans-serif}
+.cgv.g{color:#4ade80}.cgv.r{color:#f87171}
+
+/* TRIPLETA MODAL ESPECIFICO */
+.trip-slots{display:flex;gap:8px;margin-bottom:12px}
+.tslot{flex:1;background:#1a0a40;border:2px solid #5020a0;border-radius:4px;padding:8px;text-align:center;cursor:pointer;min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .15s}
+.tslot.act{border-color:#c060ff;box-shadow:0 0 12px rgba(180,80,255,.5);background:#280a60}
+.tslot.fill{border-color:#9040f0;background:#200850}
+.tslot .snum{font-size:1rem;font-weight:700;font-family:'Oswald',sans-serif;color:#e0a0ff}
+.tslot .snom{font-size:.65rem;color:#a060e0}
+.tslot .sph{font-size:.7rem;color:#7040a0;letter-spacing:1px}
+.trip-modal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:12px;max-height:300px;overflow-y:auto;padding:4px}
+.trip-modal-grid .acard{padding:6px 2px}
 
 /* TOAST */
-.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:4px;z-index:9999;font-size:.8rem;display:none;max-width:90%;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:center;border:1px solid}
-.toast.ok{background:#062012;color:var(--green);border-color:#0d5a2a}
-.toast.err{background:#140608;color:var(--red);border-color:#6b1515}
+.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);padding:10px 18px;border-radius:4px;z-index:9999;font-size:.82rem;display:none;max-width:92%;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:center;border:2px solid;font-weight:700}
+.toast.ok{background:#166534;color:#fff;border-color:#22c55e}
+.toast.err{background:#991b1b;color:#fff;border-color:#ef4444}
 
 /* SCROLL */
 ::-webkit-scrollbar{width:3px;height:3px}
@@ -1030,10 +1039,12 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
   .left-panel{width:100%;border-right:none;border-bottom:2px solid var(--border);max-height:60vh}
   .right-panel{width:100%}
   .animals-grid{grid-template-columns:repeat(7,1fr)}
+  .trip-modal-grid{grid-template-columns:repeat(7,1fr)}
   .topbar .agent-name{display:none}
 }
 @media(min-width:600px) and (max-width:900px){
   .animals-grid{grid-template-columns:repeat(7,1fr)}
+  .trip-modal-grid{grid-template-columns:repeat(7,1fr)}
 }
 </style></head><body>
 
@@ -1085,17 +1096,6 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
       </div>
     </div>
 
-    <!-- TRIPLETA -->
-    <div class="trip-sec">
-      <div class="trip-label">🎯 TRIPLETA x60 (todo el día)</div>
-      <div class="trip-slots">
-        <div class="tslot act" id="ts0" onclick="activarSlot(0)"><div class="sph">ANM 1</div></div>
-        <div class="tslot" id="ts1" onclick="activarSlot(1)"><div class="sph">ANM 2</div></div>
-        <div class="tslot" id="ts2" onclick="activarSlot(2)"><div class="sph">ANM 3</div></div>
-      </div>
-      <div class="trip-grid" id="trip-grid"></div>
-    </div>
-
     <!-- MONTO -->
     <div class="monto-sec">
       <div class="presets">
@@ -1135,7 +1135,7 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
         <div class="abtn anular" onclick="openAnular()">❌ ANULAR</div>
       </div>
       <div class="btns-row2">
-        <div class="abtn trip" onclick="openMod('mod-trip-modal')">🎯 TRIPLETA</div>
+        <div class="abtn trip" onclick="openTripletaModal()">🎯 TRIPLETA</div>
         <div class="abtn borrar" onclick="borrarTodo()">🗑 BORRAR</div>
         <div class="abtn salir" onclick="location.href='/logout'">🚪 SALIR</div>
       </div>
@@ -1147,6 +1147,42 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
 <div class="toast" id="toast"></div>
 
 <!-- ====== MODALES ====== -->
+
+<!-- TRIPLETA JUEGO MODAL -->
+<div class="modal" id="mod-tripleta">
+<div class="mc">
+  <div class="mh">
+    <h3>🎯 JUGAR TRIPLETA x60</h3>
+    <button class="btn-close" onclick="closeMod('mod-tripleta')">✕</button>
+  </div>
+  <div class="mbody">
+    <div style="color:var(--text2);font-size:.75rem;margin-bottom:10px;text-align:center">Selecciona 3 animales diferentes</div>
+    
+    <!-- Slots -->
+    <div class="trip-slots">
+      <div class="tslot act" id="tms0" onclick="activarSlotModal(0)"><div class="sph">ANIMAL 1</div></div>
+      <div class="tslot" id="tms1" onclick="activarSlotModal(1)"><div class="sph">ANIMAL 2</div></div>
+      <div class="tslot" id="tms2" onclick="activarSlotModal(2)"><div class="sph">ANIMAL 3</div></div>
+    </div>
+    
+    <!-- Grilla animales para tripleta -->
+    <div class="trip-modal-grid" id="trip-modal-grid"></div>
+    
+    <!-- Monto específico para tripleta -->
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+      <div style="color:var(--purple);font-size:.75rem;margin-bottom:6px;font-family:'Oswald',sans-serif;letter-spacing:1px">MONTO PARA TRIPLETA</div>
+      <div class="monto-input-wrap">
+        <span class="monto-label">S/</span>
+        <input type="number" class="monto-input" id="monto-tripleta" value="1" min="0.5" step="0.5">
+      </div>
+    </div>
+    
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn-q" style="flex:1;background:#166534;border-color:#22c55e" onclick="agregarTripletaModal()">✅ AGREGAR AL TICKET</button>
+      <button class="btn-close" style="flex:1;background:#1e3050;border-color:#4080c0;color:#90c0ff" onclick="closeMod('mod-tripleta')">CANCELAR</button>
+    </div>
+  </div>
+</div></div>
 
 <!-- RESULTADOS -->
 <div class="modal" id="mod-resultados">
@@ -1223,19 +1259,6 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;fo
   <div class="mbody" id="caja-body"></div>
 </div></div>
 
-<!-- TRIPLETA MODAL (solo info) -->
-<div class="modal" id="mod-trip-modal">
-<div class="mc">
-  <div class="mh"><h3>🎯 TRIPLETA x60</h3><button class="btn-close" onclick="closeMod('mod-trip-modal')">✕</button></div>
-  <div class="mbody">
-    <p style="color:var(--text2);font-size:.82rem;margin-bottom:12px">Selecciona los 3 animales directamente en el panel izquierdo usando los slots de la sección TRIPLETA.</p>
-    <div style="background:#0a0e18;border:1px solid #3a1a80;border-radius:4px;padding:12px;font-size:.82rem">
-      <div style="color:var(--purple);font-family:'Oswald',sans-serif;margin-bottom:6px">¿CÓMO JUGAR TRIPLETA?</div>
-      <div style="color:var(--text2);line-height:1.7">1. Haz clic en Slot 1, Slot 2 o Slot 3 para activarlo<br>2. Toca un animal en la fila de tripleta para asignarlo<br>3. Ingresa el monto<br>4. Presiona AGREGAR AL TICKET</div>
-    </div>
-  </div>
-</div></div>
-
 <script>
 const ANIMALES = {{ animales | tojson }};
 const COLORES  = {{ colores | tojson }};
@@ -1248,16 +1271,17 @@ let carrito = [];
 let horasSel = [];
 let animalesSel = [];
 let espSel = null;
-let tripSlot = 0;
-let tripAnim = [null, null, null];
 let horasBloq = [];
-let modoTrip = false;
+
+// Variables para modal de tripleta
+let tripSlotModal = 0;
+let tripAnimModal = [null, null, null];
 
 // ===== INIT =====
 function init(){
   renderAnimales();
-  renderTripGrid();
   renderHoras();
+  renderTripModalGrid(); // Prepara la grilla del modal (oculta)
   actualizarBloq();
   setInterval(actualizarBloq, 30000);
   setInterval(actualizarClock, 1000);
@@ -1270,7 +1294,6 @@ function init(){
 
 function actualizarClock(){
   let now = new Date();
-  // Ajuste a hora Perú (UTC-5)
   let peru = new Date(now.getTime() - (now.getTimezoneOffset()+300)*60000);
   let h = peru.getUTCHours(), m = peru.getUTCMinutes();
   let ap = h>=12?'PM':'AM'; h = h%12||12;
@@ -1321,7 +1344,6 @@ function selEsp(v){
   else {
     if(espSel) document.getElementById('esp-'+espSel).classList.remove('sel');
     espSel=v;
-    // Deseleccionar animales
     animalesSel=[]; document.querySelectorAll('.animals-grid .acard').forEach(c=>c.classList.remove('sel'));
     document.getElementById('esp-'+v).classList.add('sel');
   }
@@ -1347,44 +1369,83 @@ function toggleH(h){ let i=horasSel.indexOf(h); if(i>=0) horasSel.splice(i,1); e
 function selTodos(){ horasSel=HPERU.filter(h=>!horasBloq.includes(h)); renderHoras(); }
 function limpiarH(){ horasSel=[]; renderHoras(); }
 
-// ===== TRIPLETA =====
-function renderTripGrid(){
-  let g = document.getElementById('trip-grid'); g.innerHTML='';
+// ===== TRIPLETA MODAL =====
+function openTripletaModal(){
+  // Resetear selección
+  tripAnimModal = [null, null, null];
+  tripSlotModal = 0;
+  actualizarSlotsModal();
+  openMod('mod-tripleta');
+}
+
+function renderTripModalGrid(){
+  let g = document.getElementById('trip-modal-grid');
+  if(!g) return;
+  g.innerHTML = '';
   ORDEN.forEach(k=>{
     if(!ANIMALES[k]) return;
     let d = document.createElement('div');
     d.className = `acard ${getCardClass(k)}`;
     d.innerHTML = `<div class="anum">${k}</div><div class="anom">${ANIMALES[k]}</div>`;
-    d.onclick = ()=>selTripAnim(k);
+    d.onclick = ()=>selTripAnimModal(k);
     g.appendChild(d);
   });
 }
 
-function activarSlot(i){ tripSlot=i; actualizarSlots(); }
-
-function selTripAnim(k){
-  let otro = tripAnim.findIndex((x,i)=>x===k && i!==tripSlot);
-  if(otro>=0){ toast('Ya está en otro slot','err'); return; }
-  tripAnim[tripSlot]=k;
-  actualizarSlots();
-  if(tripSlot<2) activarSlot(tripSlot+1);
+function activarSlotModal(i){ 
+  tripSlotModal = i; 
+  actualizarSlotsModal(); 
 }
 
-function actualizarSlots(){
+function selTripAnimModal(k){
+  // Verificar si ya está en otro slot
+  let otro = tripAnimModal.findIndex((x,idx)=>x===k && idx!==tripSlotModal);
+  if(otro>=0){ 
+    toast('Animal ya seleccionado en otro slot','err'); 
+    return; 
+  }
+  tripAnimModal[tripSlotModal] = k;
+  actualizarSlotsModal();
+  // Avanzar automáticamente al siguiente slot vacío
+  if(tripSlotModal < 2){
+    let nextEmpty = tripAnimModal.findIndex(x=>x===null, tripSlotModal+1);
+    if(nextEmpty === -1) nextEmpty = tripSlotModal+1;
+    if(nextEmpty < 3) tripSlotModal = nextEmpty;
+  }
+  actualizarSlotsModal();
+}
+
+function actualizarSlotsModal(){
   for(let i=0;i<3;i++){
-    let s=document.getElementById('ts'+i);
-    let k=tripAnim[i];
+    let s = document.getElementById('tms'+i);
+    let k = tripAnimModal[i];
     if(k){
-      s.innerHTML=`<div class="snum">${k}</div><div class="snom">${ANIMALES[k].substring(0,5)}</div>`;
-      s.classList.add('fill');
-      s.className = `tslot fill${i===tripSlot?' act':''}`;
-      s.onclick = ()=>{ tripAnim[i]=null; activarSlot(i); actualizarSlots(); };
+      s.innerHTML = `<div class="snum">${k}</div><div class="snom">${ANIMALES[k].substring(0,6)}</div>`;
+      s.className = `tslot fill${i===tripSlotModal?' act':''}`;
+      s.onclick = ()=>{ tripAnimModal[i]=null; activarSlotModal(i); };
     } else {
-      s.innerHTML=`<div class="sph">ANM ${i+1}</div>`;
-      s.className = `tslot${i===tripSlot?' act':''}`;
-      s.onclick = ()=>activarSlot(i);
+      s.innerHTML = `<div class="sph">ANIMAL ${i+1}</div>`;
+      s.className = `tslot${i===tripSlotModal?' act':''}`;
+      s.onclick = ()=>activarSlotModal(i);
     }
   }
+}
+
+function agregarTripletaModal(){
+  if(tripAnimModal.includes(null)){
+    toast('Selecciona los 3 animales','err');
+    return;
+  }
+  let monto = parseFloat(document.getElementById('monto-tripleta').value)||0;
+  if(monto<=0){ toast('Monto inválido','err'); return; }
+  
+  let sel = tripAnimModal.join(',');
+  let desc = tripAnimModal.map(n=>n+'-'+ANIMALES[n].substring(0,4)).join(' ');
+  carrito.push({tipo:'tripleta',hora:'TODO DÍA',seleccion:sel,monto,desc:'🎯 '+desc});
+  
+  renderCarrito();
+  closeMod('mod-tripleta');
+  toast('Tripleta agregada al ticket','ok');
 }
 
 // ===== MONTO =====
@@ -1394,15 +1455,6 @@ function setM(v){ document.getElementById('monto').value=v; }
 function agregar(){
   let monto = parseFloat(document.getElementById('monto').value)||0;
   if(monto<=0){ toast('Monto inválido','err'); return; }
-
-  // Tripleta: si los 3 slots están llenos
-  if(tripAnim.every(x=>x!==null)){
-    let sel=tripAnim.join(',');
-    let desc=tripAnim.map(n=>n+'-'+ANIMALES[n].substring(0,4)).join(' ');
-    carrito.push({tipo:'tripleta',hora:'TODO DÍA',seleccion:sel,monto,desc:'🎯 '+desc});
-    tripAnim=[null,null,null]; tripSlot=0; actualizarSlots();
-    renderCarrito(); toast('Tripleta agregada','ok'); return;
-  }
 
   // Especial
   if(espSel){
@@ -1438,7 +1490,6 @@ function renderCarrito(){
   carrito.forEach((it,i)=>{
     total+=it.monto;
     let idx=HPERU.indexOf(it.hora);
-    let hv=idx>=0?HVEN[idx]:'';
     let horaLabel=it.hora==='TODO DÍA'?'x60':it.hora.replace(':00','').replace(' ','');
     html+=`<div class="ti">
       <span class="ti-hora">${horaLabel}</span>
@@ -1504,45 +1555,85 @@ function consultarTickets(){
   let est=document.getElementById('mt-estado').value;
   if(!ini||!fin){ toast('Seleccione fechas','err'); return; }
   let lista=document.getElementById('mt-lista');
-  lista.innerHTML='<p style="color:var(--text2);text-align:center;padding:15px;font-size:.75rem;letter-spacing:2px">CARGANDO...</p>';
+  lista.innerHTML='<p style="color:#6090c0;text-align:center;padding:15px;font-size:.75rem;letter-spacing:2px">CARGANDO...</p>';
   fetch('/api/mis-tickets',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fecha_inicio:ini,fecha_fin:fin,estado:est})})
   .then(r=>r.json()).then(d=>{
-    if(d.error){lista.innerHTML=`<p style="color:var(--red);text-align:center">${d.error}</p>`;return;}
+    if(d.error){lista.innerHTML=`<p style="color:#f87171;text-align:center">${d.error}</p>`;return;}
     let res=document.getElementById('mt-resumen'); res.style.display='block';
     res.textContent=`${d.totales.cantidad} TICKET(S) — TOTAL: S/ ${d.totales.ventas.toFixed(2)}`;
-    if(!d.tickets.length){lista.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;font-size:.75rem;letter-spacing:2px">SIN RESULTADOS</p>';return;}
+    if(!d.tickets.length){lista.innerHTML='<p style="color:#4a6090;text-align:center;padding:20px;font-size:.75rem;letter-spacing:2px">SIN RESULTADOS</p>';return;}
     let html='';
-    d.tickets.forEach((t,idx)=>{
+    d.tickets.forEach((t)=>{
       let bc=t.pagado?'p':(t.premio_calculado>0?'g':'n');
       let bt=t.pagado?'✅ PAGADO':(t.premio_calculado>0?'🏆 GANADOR':'⏳ PENDIENTE');
       let tc=t.pagado?'gano':(t.premio_calculado>0?'pte':'');
+
       let jhtml='';
-      if(t.jugadas) t.jugadas.forEach(j=>{
-        let rn=j.resultado_nombre?(j.resultado+' — '+j.resultado_nombre):(j.resultado||'...');
-        jhtml+=`<div class="jrow ${j.gano?'gano':''}">
-          <span style="color:var(--teal);font-family:'Oswald',sans-serif;font-size:.72rem;min-width:55px">${j.hora.replace(':00','')}</span>
-          <span style="flex:1;color:#90a8d0;overflow:hidden;text-overflow:ellipsis">${j.seleccion} ${j.nombre||''}</span>
-          <span style="color:var(--text2);font-size:.72rem">S/${j.monto}</span>
-          ${j.gano?`<span style="color:var(--green);font-weight:700;margin-left:4px;font-size:.72rem">+S/${j.premio}</span>`:''}
-        </div>`;
-      });
+      if(t.jugadas && t.jugadas.length){
+        jhtml+=`<div style="color:#4080c0;font-size:.65rem;font-family:'Oswald',sans-serif;letter-spacing:2px;padding:4px 0 2px">JUGADAS</div>`;
+        t.jugadas.forEach(j=>{
+          let rn=j.resultado?(j.resultado+' — '+(j.resultado_nombre||'')):'...';
+          let tipoIcon=j.tipo==='especial'?'🎲':'🐾';
+          jhtml+=`<div class="jrow ${j.gano?'gano':''}">
+            <span style="color:#00c8e8;font-family:'Oswald',sans-serif;font-size:.68rem;min-width:52px;font-weight:700">${j.hora.replace(':00 ','').replace(' ','')}</span>
+            <span style="flex:1;color:#c0d8f0;font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${tipoIcon} ${j.tipo==='animal'?(j.seleccion+' '+j.nombre):j.seleccion}</span>
+            <span style="color:#6090c0;font-size:.68rem;margin:0 4px">S/${j.monto}</span>
+            <span style="font-size:.68rem;min-width:60px;text-align:right">
+              ${j.resultado?`<span style="color:${j.gano?'#4ade80':'#6090c0'}">${j.gano?'✓':'✗'} ${rn}</span>`:'<span style="color:#2a4060">PEND</span>'}
+            </span>
+            ${j.gano?`<span style="color:#4ade80;font-weight:700;font-family:'Oswald',sans-serif;font-size:.72rem;margin-left:4px">+${j.premio}</span>`:''}
+          </div>`;
+        });
+      }
+
+      let thtml='';
+      if(t.tripletas && t.tripletas.length){
+        thtml+=`<div style="color:#c084fc;font-size:.65rem;font-family:'Oswald',sans-serif;letter-spacing:2px;padding:4px 0 2px;margin-top:4px">🎯 TRIPLETAS x60</div>`;
+        t.tripletas.forEach(tr=>{
+          let salStr=tr.salieron&&tr.salieron.length?tr.salieron.join(', '):'Ninguno aún';
+          let pend=3-tr.salieron.length;
+          thtml+=`<div class="trip-row ${tr.gano?'gano':''}">
+            <div style="flex:1">
+              <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+                <span style="background:#3b0764;border:2px solid #7c3aed;border-radius:3px;padding:2px 5px;font-family:'Oswald',sans-serif;font-size:.72rem;color:#e0a0ff">${tr.animal1} ${tr.nombre1}</span>
+                <span style="color:#6040a0;font-size:.7rem">•</span>
+                <span style="background:#3b0764;border:2px solid #7c3aed;border-radius:3px;padding:2px 5px;font-family:'Oswald',sans-serif;font-size:.72rem;color:#e0a0ff">${tr.animal2} ${tr.nombre2}</span>
+                <span style="color:#6040a0;font-size:.7rem">•</span>
+                <span style="background:#3b0764;border:2px solid #7c3aed;border-radius:3px;padding:2px 5px;font-family:'Oswald',sans-serif;font-size:.72rem;color:#e0a0ff">${tr.animal3} ${tr.nombre3}</span>
+              </div>
+              <div style="margin-top:3px;font-size:.68rem">
+                <span style="color:#6090c0">Salieron: </span>
+                <span style="color:${tr.gano?'#4ade80':'#a080c0'}">${salStr}</span>
+                ${!tr.gano&&pend>0?`<span style="color:#4a3080"> (faltan ${pend})</span>`:''}
+                ${tr.gano?'<span style="color:#4ade80;font-weight:700"> ✅ GANÓ</span>':''}
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;margin-left:8px">
+              <div style="color:#fbbf24;font-family:'Oswald',sans-serif;font-weight:700">S/${tr.monto}</div>
+              ${tr.gano?`<div style="color:#4ade80;font-weight:700;font-family:'Oswald',sans-serif">+S/${tr.premio.toFixed(2)}</div>`:'<div style="color:#3a2060;font-size:.68rem">x60</div>'}
+              ${tr.pagado?'<div style="color:#22c55e;font-size:.65rem;font-family:\'Oswald\',sans-serif">COBRADO</div>':''}
+            </div>
+          </div>`;
+        });
+      }
+
       html+=`<div class="tcard ${tc}">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px">
           <div style="flex:1;min-width:0">
             <div class="ts">🎫 #${t.serial}</div>
-            <div style="color:var(--text2);font-size:.7rem">${t.fecha}</div>
+            <div style="color:#4a6090;font-size:.7rem">${t.fecha}</div>
           </div>
           <div style="text-align:right;flex-shrink:0">
             <span class="badge ${bc}">${bt}</span>
-            <div style="color:var(--gold);font-family:'Oswald',sans-serif;font-size:.85rem;margin-top:2px">S/${t.total}</div>
-            ${t.premio_calculado>0?`<div style="color:var(--green);font-size:.8rem;font-weight:700">+S/${t.premio_calculado.toFixed(2)}</div>`:''}
+            <div style="color:#fbbf24;font-family:'Oswald',sans-serif;font-size:.9rem;margin-top:3px;font-weight:700">S/${t.total}</div>
+            ${t.premio_calculado>0?`<div style="color:#4ade80;font-size:.82rem;font-weight:700;font-family:'Oswald',sans-serif">PREMIO: S/${t.premio_calculado.toFixed(2)}</div>`:''}
           </div>
         </div>
-        <div style="margin-top:6px">${jhtml}</div>
+        ${jhtml}${thtml}
       </div>`;
     });
     lista.innerHTML=html;
-  }).catch(()=>{lista.innerHTML='<p style="color:var(--red);text-align:center">Error</p>';});
+  }).catch(()=>{lista.innerHTML='<p style="color:#f87171;text-align:center">Error de conexión</p>';});
 }
 
 // ===== ARCHIVO/CAJA HISTÓRICO =====
@@ -1663,47 +1754,54 @@ ADMIN_HTML = r'''<!DOCTYPE html>
 :root{--bg:#06090f;--panel:#0a0e18;--card:#0d1220;--border:#1a2540;--gold:#f5a623;--blue:#2060d0;--teal:#00b4d8;--red:#e53e3e;--green:#22c55e;--purple:#a855f7;--text:#c8d8f0;--text2:#4a6090}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh}
-.topbar{background:var(--panel);border-bottom:2px solid var(--border);padding:0 16px;height:40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar{background:#0d1428;border-bottom:2px solid #f5a623;padding:0 16px;height:40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
 .brand{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:#fff;letter-spacing:2px}
 .brand em{color:var(--gold);font-style:normal}
-.btn-exit{background:#1a0808;color:#e05050;border:1px solid #6b1515;padding:6px 12px;border-radius:3px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:.78rem;letter-spacing:1px}
-.tabs{display:flex;background:#050810;border-bottom:2px solid var(--border);overflow-x:auto;position:sticky;top:40px;z-index:99}
-.tab{padding:11px 16px;cursor:pointer;color:var(--text2);font-size:.75rem;font-family:'Oswald',sans-serif;letter-spacing:2px;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
-.tab.active{color:var(--teal);border-bottom-color:var(--teal);background:#050e12}
+.btn-exit{background:#991b1b;color:#fff;border:2px solid #ef4444;padding:6px 14px;border-radius:3px;cursor:pointer;font-family:'Oswald',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:1px;transition:all .15s}
+.btn-exit:hover{background:#b91c1c}
+.tabs{display:flex;background:#050810;border-bottom:2px solid #1a2a50;overflow-x:auto;position:sticky;top:40px;z-index:99}
+.tab{padding:11px 14px;cursor:pointer;color:#4a6090;font-size:.72rem;font-family:'Oswald',sans-serif;letter-spacing:2px;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;font-weight:600}
+.tab:hover{color:#90b8e0;background:#060c1a}
+.tab.active{color:#00d8ff;border-bottom-color:#00b4d8;background:#060e18}
 .tc{display:none;padding:14px;max-width:960px;margin:auto}
 .tc.active{display:block}
-.fbox{background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:16px;margin-bottom:12px}
-.fbox h3{font-family:'Oswald',sans-serif;color:var(--teal);margin-bottom:12px;font-size:.85rem;letter-spacing:2px}
+.fbox{background:#090f1e;border:2px solid #1a2a50;border-radius:5px;padding:16px;margin-bottom:12px}
+.fbox h3{font-family:'Oswald',sans-serif;color:#00d8ff;margin-bottom:12px;font-size:.85rem;letter-spacing:2px;border-bottom:1px solid #1a2a50;padding-bottom:8px}
 .frow{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.frow input,.frow select{flex:1;min-width:110px;padding:9px 11px;background:#060e1e;border:1px solid var(--border);border-radius:3px;color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:.85rem}
-.frow input:focus,.frow select:focus{outline:none;border-color:var(--teal)}
-.btn-s{padding:9px 16px;background:linear-gradient(135deg,#062012,#041a0e);color:var(--green);border:1px solid #0d5a2a;border-radius:3px;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:2px;cursor:pointer;font-size:.78rem;white-space:nowrap}
-.btn-d{padding:9px 16px;background:#1a0808;color:var(--red);border:1px solid #6b1515;border-radius:3px;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:2px;cursor:pointer;font-size:.78rem}
-.btn-sec{padding:7px 12px;background:var(--card);color:var(--text2);border:1px solid var(--border);border-radius:3px;cursor:pointer;font-size:.78rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px}
+.frow input,.frow select{flex:1;min-width:110px;padding:9px 11px;background:#0a1828;border:2px solid #2a4a80;border-radius:3px;color:#fbbf24;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600}
+.frow input:focus,.frow select:focus{outline:none;border-color:#00b4d8}
+.btn-s{padding:9px 16px;background:#166534;color:#fff;border:2px solid #22c55e;border-radius:3px;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:2px;cursor:pointer;font-size:.78rem;white-space:nowrap;transition:all .15s}
+.btn-s:hover{background:#15803d;border-color:#4ade80}
+.btn-d{padding:9px 16px;background:#991b1b;color:#fff;border:2px solid #ef4444;border-radius:3px;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:2px;cursor:pointer;font-size:.78rem;transition:all .15s}
+.btn-d:hover{background:#b91c1c}
+.btn-sec{padding:7px 12px;background:#1a3050;color:#90b8e0;border:2px solid #2a5080;border-radius:3px;cursor:pointer;font-size:.78rem;font-family:'Oswald',sans-serif;letter-spacing:1px;font-weight:700;transition:all .15s}
+.btn-sec:hover{background:#006080;border-color:#00b4d8;color:#fff}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
-.sc{background:var(--card);border:1px solid var(--border);border-radius:3px;padding:14px;text-align:center}
-.sc h3{color:var(--text2);font-size:.68rem;letter-spacing:2px;font-family:'Oswald',sans-serif;margin-bottom:6px}
-.sc p{color:var(--gold);font-size:1.3rem;font-weight:700;font-family:'Oswald',sans-serif}
-.sc p.g{color:var(--green)}.sc p.r{color:var(--red)}
-.ri{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;margin:4px 0;background:var(--card);border-radius:3px;border-left:2px solid var(--border)}
-.ri.ok{border-left-color:var(--green)}
-.msg{padding:9px 12px;border-radius:3px;margin:6px 0;font-size:.82rem;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:center}
-.msg.ok{background:#062012;color:var(--green);border:1px solid #0d5a2a}
-.msg.err{background:#1a0808;color:var(--red);border:1px solid #6b1515}
+.sc{background:#0d1828;border:2px solid #1a2a50;border-radius:4px;padding:14px;text-align:center}
+.sc h3{color:#4a6090;font-size:.65rem;letter-spacing:2px;font-family:'Oswald',sans-serif;margin-bottom:6px}
+.sc p{color:#fbbf24;font-size:1.3rem;font-weight:700;font-family:'Oswald',sans-serif}
+.sc p.g{color:#4ade80}.sc p.r{color:#f87171}
+.ri{display:flex;justify-content:space-between;align-items:center;padding:9px 11px;margin:4px 0;background:#0d1828;border-radius:3px;border-left:3px solid #1a2a50}
+.ri.ok{border-left-color:#22c55e;background:#070f0a}
+.msg{padding:9px 12px;border-radius:3px;margin:6px 0;font-size:.82rem;font-family:'Oswald',sans-serif;letter-spacing:1px;text-align:center;font-weight:700;border:2px solid}
+.msg.ok{background:#166534;color:#fff;border-color:#22c55e}
+.msg.err{background:#991b1b;color:#fff;border-color:#ef4444}
 table{width:100%;border-collapse:collapse;font-size:.8rem}
-th{background:var(--card);color:var(--teal);padding:9px;text-align:left;border-bottom:1px solid var(--border);font-family:'Oswald',sans-serif;letter-spacing:1px;font-size:.72rem}
-td{padding:7px 9px;border-bottom:1px solid #0a0e18;color:var(--text)}
-tr:hover td{background:var(--card)}
-.rank-item{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;margin:5px 0;background:var(--card);border-radius:3px;border-left:2px solid var(--gold)}
+th{background:#0d1828;color:#00d8ff;padding:9px;text-align:left;border-bottom:2px solid #1a2a50;font-family:'Oswald',sans-serif;letter-spacing:1px;font-size:.72rem}
+td{padding:7px 9px;border-bottom:1px solid #0a1020;color:var(--text)}
+tr:hover td{background:#0d1828}
+.rank-item{display:flex;justify-content:space-between;align-items:center;padding:11px 13px;margin:5px 0;background:#0d1828;border-radius:3px;border-left:3px solid #f5a623}
 .glmsg{position:fixed;top:48px;left:50%;transform:translateX(-50%);z-index:999;min-width:240px;display:none}
-.sbox{background:var(--card);border-radius:3px;padding:10px;margin:6px 0;border:1px solid var(--border)}
-.srow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #0a0e18;font-size:.8rem}
+.sbox{background:#0d1828;border-radius:3px;padding:10px;margin:6px 0;border:1px solid #1a2a50}
+.srow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #0a1020;font-size:.8rem}
 .srow:last-child{border-bottom:none}
-.sl{color:var(--text2)}.sv{color:var(--gold);font-weight:700;font-family:'Oswald',sans-serif}
-.btn-edit{padding:4px 10px;background:#0d2a60;color:#7ab0ff;border:1px solid #1a3a80;border-radius:3px;cursor:pointer;font-size:.72rem;font-family:'Rajdhani',sans-serif;letter-spacing:1px}
-::-webkit-scrollbar{width:3px;height:3px}
+.sl{color:#4a6090}.sv{color:#fbbf24;font-weight:700;font-family:'Oswald',sans-serif}
+.btn-edit{padding:5px 12px;background:#1a3a90;color:#fff;border:2px solid #4070d0;border-radius:3px;cursor:pointer;font-size:.72rem;font-family:'Oswald',sans-serif;letter-spacing:1px;font-weight:700;transition:all .15s}
+.btn-edit:hover{background:#2050c0}
+::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:#050810}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+::-webkit-scrollbar-thumb{background:#1a2a50;border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:#2a4080}
 </style></head><body>
 <div class="topbar">
   <div class="brand">ZOO<em>LO</em> — ADMIN</div>
@@ -1909,25 +2007,58 @@ function guardarRA(){
 
 function cargarTrip(){
   let l=document.getElementById('tri-lista');
-  l.innerHTML='<p style="color:var(--text2);text-align:center;padding:12px;font-size:.75rem">CARGANDO...</p>';
+  l.innerHTML='<p style="color:#4a6090;text-align:center;padding:12px;font-size:.75rem">CARGANDO...</p>';
   fetch('/admin/tripletas-hoy').then(r=>r.json()).then(d=>{
     document.getElementById('tri-stats').innerHTML=`
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <div class="sc" style="flex:1"><h3>TOTAL</h3><p>${d.total}</p></div>
+        <div class="sc" style="flex:1"><h3>TOTAL TRIPLETAS</h3><p>${d.total}</p></div>
         <div class="sc" style="flex:1"><h3>GANADORAS</h3><p class="g">${d.ganadoras}</p></div>
-        <div class="sc" style="flex:1"><h3>PREMIOS</h3><p class="r">S/${d.total_premios.toFixed(2)}</p></div>
+        <div class="sc" style="flex:1"><h3>PREMIOS TOTALES</h3><p class="r">S/${d.total_premios.toFixed(2)}</p></div>
       </div>`;
-    if(!d.tripletas.length){l.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;font-size:.75rem;letter-spacing:2px">NO HAY TRIPLETAS HOY</p>';return;}
+    if(!d.tripletas.length){
+      l.innerHTML='<p style="color:#2a4060;text-align:center;padding:20px;font-size:.75rem;letter-spacing:2px">NO HAY TRIPLETAS HOY</p>';
+      return;
+    }
     let html='';
     d.tripletas.forEach(tr=>{
-      html+=`<div style="padding:9px 11px;margin:4px 0;background:var(--card);border-left:2px solid var(--purple);border-radius:3px;font-size:.8rem ${tr.gano?';background:rgba(34,197,94,.05);border-left-color:var(--green)':''}">
-        <div style="display:flex;justify-content:space-between">
-          <b style="color:#c084fc;font-family:'Oswald',sans-serif">${tr.nombres[0]} • ${tr.nombres[1]} • ${tr.nombres[2]}</b>
-          <span style="color:var(--text2);font-size:.72rem">${tr.agencia} | S/${tr.monto}x60</span>
+      let salStr=tr.salieron&&tr.salieron.length?tr.salieron.join(' • '):'Ninguno aún';
+      let pend=3-tr.salieron.length;
+      let bordCol=tr.gano?'#22c55e':'#7c3aed';
+      let bgCol=tr.gano?'#040f08':'#0d0620';
+      html+=`<div style="padding:12px;margin:5px 0;background:${bgCol};border-left:4px solid ${bordCol};border-radius:4px;border:1px solid ${tr.gano?'#166534':'#3b0764'}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px">
+          <div>
+            <div style="color:#c084fc;font-family:'Oswald',sans-serif;font-size:.78rem;letter-spacing:1px;margin-bottom:4px">🎯 TRIPLETA #${tr.id} — Serial: ${tr.serial}</div>
+            <div style="color:#6090c0;font-size:.7rem">Agencia: <span style="color:#a0c0e0;font-weight:700">${tr.agencia}</span></div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="color:#fbbf24;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700">S/${tr.monto} <span style="color:#6090c0;font-size:.7rem">x60</span></div>
+            ${tr.gano?`<div style="color:#4ade80;font-family:'Oswald',sans-serif;font-weight:700;font-size:1rem">+S/${tr.premio.toFixed(2)}</div>`:''}
+            ${tr.pagado?'<div style="background:#166534;color:#fff;padding:2px 6px;border-radius:3px;font-size:.65rem;font-family:\'Oswald\',sans-serif;border:1px solid #22c55e">COBRADO</div>':''}
+          </div>
         </div>
-        <div style="color:${tr.gano?'var(--green)':'var(--text2)'};font-size:.76rem;margin-top:3px">
-          ${tr.salieron.length?'Salieron: '+tr.salieron.join(', ')+' ('+tr.salieron.length+'/3)':'Pendiente'}
-          ${tr.gano?` — <b>+S/${tr.premio.toFixed(2)}</b>`:''}
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">
+          <div style="background:#1a0050;border:2px solid #7c3aed;border-radius:4px;padding:5px 10px;font-family:'Oswald',sans-serif;text-align:center">
+            <div style="color:#fbbf24;font-size:.82rem;font-weight:700">${tr.animal1}</div>
+            <div style="color:#e0a0ff;font-size:.7rem">${tr.nombres[0]}</div>
+          </div>
+          <div style="color:#5a3080;font-size:1.2rem;align-self:center">•</div>
+          <div style="background:#1a0050;border:2px solid #7c3aed;border-radius:4px;padding:5px 10px;font-family:'Oswald',sans-serif;text-align:center">
+            <div style="color:#fbbf24;font-size:.82rem;font-weight:700">${tr.animal2}</div>
+            <div style="color:#e0a0ff;font-size:.7rem">${tr.nombres[1]}</div>
+          </div>
+          <div style="color:#5a3080;font-size:1.2rem;align-self:center">•</div>
+          <div style="background:#1a0050;border:2px solid #7c3aed;border-radius:4px;padding:5px 10px;font-family:'Oswald',sans-serif;text-align:center">
+            <div style="color:#fbbf24;font-size:.82rem;font-weight:700">${tr.animal3}</div>
+            <div style="color:#e0a0ff;font-size:.7rem">${tr.nombres[2]}</div>
+          </div>
+        </div>
+        <div style="background:#080418;border:1px solid #2a1060;border-radius:3px;padding:6px 10px;font-size:.75rem">
+          <span style="color:#4a6090">Salidos hoy: </span>
+          <span style="color:${tr.gano?'#4ade80':'#a080c0'};font-weight:700">${salStr}</span>
+          <span style="color:#2a4060"> (${tr.salieron.length}/3)</span>
+          ${!tr.gano&&pend>0?`<span style="color:#4a3080;margin-left:6px">Faltan: ${pend}</span>`:''}
+          ${tr.gano?'<span style="color:#4ade80;font-weight:700;margin-left:8px">✅ GANÓ TRIPLETA</span>':''}
         </div>
       </div>`;
     });
@@ -1937,17 +2068,26 @@ function cargarTrip(){
 
 function cargarRiesgo(){
   fetch('/admin/riesgo').then(r=>r.json()).then(d=>{
-    document.getElementById('riesgo-info').textContent=`SORTEO: ${d.sorteo_objetivo||'N/A'} | TOTAL: S/${(d.total_apostado||0).toFixed(2)}`;
+    document.getElementById('riesgo-info').innerHTML=`<span style="background:#0d1828;border:2px solid #2a4a80;border-radius:3px;padding:4px 10px;font-size:.8rem">⏱ PRÓXIMO SORTEO: <b style="color:#fbbf24">${d.sorteo_objetivo||'N/A'}</b> &nbsp;|&nbsp; 💰 TOTAL EN JUEGO: <b style="color:#f87171">S/${(d.total_apostado||0).toFixed(2)}</b></span>`;
     let l=document.getElementById('riesgo-lista');
-    if(!Object.keys(d.riesgo).length){l.innerHTML='<p style="color:var(--text2);text-align:center;padding:20px;font-size:.75rem;letter-spacing:2px">SIN APUESTAS</p>';return;}
+    if(!Object.keys(d.riesgo).length){l.innerHTML='<p style="color:#2a4060;text-align:center;padding:20px;font-size:.75rem;letter-spacing:2px">SIN APUESTAS PARA ESE SORTEO</p>';return;}
     let html='';
     for(let[k,v] of Object.entries(d.riesgo)){
-      html+=`<div style="padding:9px 11px;margin:4px 0;background:var(--card);border-left:2px solid ${v.es_lechuza?'var(--gold)':'var(--blue)'};border-radius:3px;font-size:.8rem">
-        <div style="display:flex;justify-content:space-between">
-          <b style="color:${v.es_lechuza?'var(--gold)':'var(--text)'}">${k}${v.es_lechuza?' ⚠️':''}</b>
-          <span style="color:var(--text2)">${v.porcentaje}%</span>
+      let barW=Math.min(v.porcentaje*3,100);
+      let bc=v.es_lechuza?'#d97706':'#1a3a90';
+      let tc=v.es_lechuza?'#fbbf24':'#90b8ff';
+      html+=`<div style="padding:10px 12px;margin:5px 0;background:#0d1828;border-left:4px solid ${v.es_lechuza?'#d97706':'#2060d0'};border-radius:4px;border:1px solid ${bc}">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+          <b style="color:${tc};font-family:'Oswald',sans-serif;font-size:.85rem">${k}${v.es_lechuza?' 🦉 LECHUZA x70':''}</b>
+          <span style="background:${bc};color:#fff;padding:2px 8px;border-radius:3px;font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700">${v.porcentaje}%</span>
         </div>
-        <div style="color:var(--text2);font-size:.75rem;margin-top:2px">Apostado: S/${v.apostado.toFixed(2)} | Pagaría: <span style="color:var(--red)">S/${v.pagaria.toFixed(2)}</span></div>
+        <div style="display:flex;gap:12px;font-size:.78rem;margin-bottom:5px">
+          <span style="color:#6090c0">Apostado: <b style="color:#fbbf24">S/${v.apostado.toFixed(2)}</b></span>
+          <span style="color:#6090c0">Pagaría: <b style="color:#f87171">S/${v.pagaria.toFixed(2)}</b></span>
+        </div>
+        <div style="background:#060c1a;border-radius:2px;height:6px;overflow:hidden">
+          <div style="background:${v.es_lechuza?'#d97706':'#2060d0'};height:100%;width:${barW}%;border-radius:2px"></div>
+        </div>
       </div>`;
     }
     l.innerHTML=html;
@@ -2024,18 +2164,63 @@ function toggleAg(id,a){
 function verificarAdm(){
   let s=document.getElementById('op-ser').value.trim(); if(!s)return;
   let c=document.getElementById('op-res');
-  c.innerHTML='<p style="color:var(--text2);text-align:center;padding:8px;font-size:.75rem;letter-spacing:2px">VERIFICANDO...</p>';
-  fetch('/api/verificar-ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({serial:s})})
+  c.innerHTML='<p style="color:#4a6090;text-align:center;padding:8px;font-size:.75rem;letter-spacing:2px">VERIFICANDO...</p>';
+  fetch('/api/consultar-ticket-detalle',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({serial:s})})
   .then(r=>r.json()).then(d=>{
-    if(d.error){c.innerHTML=`<div class="msg err">${d.error}</div>`;return;}
-    let col=d.total_ganado>0?'var(--green)':'#1e2a40';
-    c.innerHTML=`<div style="border:1px solid ${col};border-radius:4px;padding:14px;margin-top:8px">
-      <div style="color:var(--teal);font-family:'Oswald',sans-serif;letter-spacing:2px;margin-bottom:10px">TICKET #${s}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <span style="color:var(--text2);font-size:.8rem">PREMIO</span>
-        <span style="color:${col};font-family:'Oswald',sans-serif;font-size:1.1rem">S/${d.total_ganado.toFixed(2)}</span>
+    if(d.error){c.innerHTML=`<div class="msg err">❌ ${d.error}</div>`;return;}
+    let t=d.ticket; let premio=t.premio_total||0;
+    let col=premio>0?'#22c55e':'#1a2a50';
+
+    let jhtml='';
+    if(d.jugadas&&d.jugadas.length){
+      jhtml+=`<div style="color:#4080c0;font-size:.65rem;font-family:'Oswald',sans-serif;letter-spacing:2px;padding:6px 0 3px;border-top:1px solid #1a2a50;margin-top:8px">JUGADAS</div>`;
+      d.jugadas.forEach(j=>{
+        let rn=j.resultado?(j.resultado+' '+(j.resultado_nombre||'')):'PEND';
+        jhtml+=`<div style="display:flex;align-items:center;gap:6px;padding:4px 6px;margin:2px 0;background:#060c1a;border-left:3px solid ${j.gano?'#22c55e':'#1a2a50'};border-radius:2px;font-size:.75rem">
+          <span style="color:#00c8e8;font-family:'Oswald',sans-serif;font-size:.7rem;min-width:48px;font-weight:700">${(j.hora||'').replace(':00 ','').replace(' ','')}</span>
+          <span style="flex:1;color:#c0d8f0">${j.tipo==='animal'?(j.seleccion+' '+j.nombre_seleccion):j.seleccion}</span>
+          <span style="color:#6090c0">S/${j.monto}</span>
+          <span style="color:${j.gano?'#4ade80':'#3a5070'};min-width:60px;text-align:right">${j.gano?'✓ '+rn:'✗ '+rn}</span>
+          ${j.gano?`<span style="color:#4ade80;font-weight:700;font-family:'Oswald',sans-serif">+${j.premio}</span>`:''}
+        </div>`;
+      });
+    }
+
+    let thtml='';
+    if(d.tripletas&&d.tripletas.length){
+      thtml+=`<div style="color:#c084fc;font-size:.65rem;font-family:'Oswald',sans-serif;letter-spacing:2px;padding:6px 0 3px;border-top:1px solid #1a2a50;margin-top:6px">🎯 TRIPLETAS</div>`;
+      d.tripletas.forEach(tr=>{
+        let salStr=tr.salieron&&tr.salieron.length?tr.salieron.join(', '):'Ninguno';
+        thtml+=`<div style="padding:8px 10px;margin:3px 0;background:#0d0620;border-left:3px solid ${tr.gano?'#c084fc':'#3b0764'};border-radius:3px;font-size:.78rem">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="color:#e0a0ff;font-family:'Oswald',sans-serif">${tr.animal1} ${tr.nombre1} • ${tr.animal2} ${tr.nombre2} • ${tr.animal3} ${tr.nombre3}</span>
+            <span style="color:#fbbf24;font-weight:700">S/${tr.monto} x60</span>
+          </div>
+          <div style="font-size:.72rem">
+            <span style="color:#4a6090">Salidos: </span><span style="color:${tr.gano?'#4ade80':'#8060c0'}">${salStr} (${tr.salieron.length}/3)</span>
+            ${tr.gano?`<span style="color:#4ade80;font-weight:700;margin-left:8px">✅ GANÓ +S/${tr.premio.toFixed(2)}</span>`:''}
+          </div>
+        </div>`;
+      });
+    }
+
+    c.innerHTML=`<div style="border:2px solid ${col};border-radius:5px;padding:14px;margin-top:8px;background:#060c1a">
+      <div style="color:#00d8ff;font-family:'Oswald',sans-serif;letter-spacing:2px;margin-bottom:8px;font-size:.88rem">🎫 TICKET #${s}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div>
+          <div style="color:#4a6090;font-size:.72rem">${t.fecha}</div>
+          ${t.pagado?'<div style="background:#166534;color:#fff;display:inline-block;padding:2px 8px;border-radius:3px;font-size:.7rem;font-family:\'Oswald\',sans-serif;border:1px solid #22c55e">✅ YA PAGADO</div>':''}
+          ${t.anulado?'<div style="background:#991b1b;color:#fff;display:inline-block;padding:2px 8px;border-radius:3px;font-size:.7rem;font-family:\'Oswald\',sans-serif">❌ ANULADO</div>':''}
+        </div>
+        <div style="text-align:right">
+          <div style="color:#4a6090;font-size:.7rem">APOSTADO</div>
+          <div style="color:#fbbf24;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700">S/${t.total_apostado}</div>
+          ${premio>0?`<div style="color:#4ade80;font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700">PREMIO: S/${premio.toFixed(2)}</div>`:''}
+        </div>
       </div>
-      ${d.total_ganado>0?`<button onclick="pagarAdm(${d.ticket_id},${d.total_ganado})" style="width:100%;padding:10px;background:linear-gradient(135deg,#062012,#041a0e);color:var(--green);border:1px solid #0d5a2a;border-radius:3px;font-weight:700;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:2px;font-size:.82rem">💰 CONFIRMAR PAGO S/${d.total_ganado.toFixed(2)}</button>`:'<div class="msg err">SIN PREMIO</div>'}
+      ${jhtml}${thtml}
+      ${premio>0&&!t.pagado&&!t.anulado?`<button onclick="pagarAdm(${t.id},${premio})" style="width:100%;padding:11px;background:#166534;color:#fff;border:2px solid #22c55e;border-radius:4px;font-weight:700;cursor:pointer;font-family:'Oswald',sans-serif;letter-spacing:2px;font-size:.85rem;margin-top:10px;transition:all .15s" onmouseover="this.style.background='#15803d'" onmouseout="this.style.background='#166534'">💰 PAGAR S/${premio.toFixed(2)}</button>`:''}
+      ${premio===0&&!t.pagado?`<div class="msg err" style="margin-top:8px">SIN PREMIO AÚN</div>`:''}
     </div>`;
   });
 }
@@ -2043,13 +2228,13 @@ function pagarAdm(tid,m){
   if(!confirm(`¿Confirmar pago S/${m}?`))return;
   fetch('/api/pagar-ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ticket_id:tid})})
   .then(r=>r.json()).then(d=>{
-    if(d.status==='ok'){glMsg('✅ Ticket pagado','ok');document.getElementById('op-res').innerHTML='';}
+    if(d.status==='ok'){glMsg('✅ Ticket pagado exitosamente','ok');document.getElementById('op-res').innerHTML='';}
     else glMsg('❌ '+d.error,'err');
   });
 }
 function anularAdm(){
   let s=document.getElementById('an-ser').value.trim(); if(!s)return;
-  if(!confirm('¿Anular ticket '+s+'?'))return;
+  if(!confirm('¿Anular ticket '+s+'? Esta acción no se puede deshacer.'))return;
   fetch('/api/anular-ticket',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({serial:s})})
   .then(r=>r.json()).then(d=>{
     let c=document.getElementById('an-res');
@@ -2064,12 +2249,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   cargarDash();
 });
 
-// Falta en admin el endpoint de estadisticas-rango
-{% raw %}
-{% endraw %}
-</script>
-<script>
-// Necesario para reportes admin
 async function fetchEstadisticasRango(ini,fin){
   return fetch('/admin/estadisticas-rango',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fecha_inicio:ini,fecha_fin:fin})}).then(r=>r.json());
 }
@@ -2154,13 +2333,9 @@ if __name__ == '__main__':
     init_db()
     port = int(os.environ.get('PORT', 5000))
     print("="*55)
-    print("  🦁 ZOOLO CASINO v2.1 — Layout Compacto")
+    print("  🦁 ZOOLO CASINO v2.3 — Tripleta en Modal")
     print("="*55)
     print(f"  URL: http://localhost:{port}")
     print(f"  Admin: usuario=admin  password=admin123")
     print("="*55)
     app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
-
-
-
-
