@@ -19,11 +19,11 @@ PAGO_LECHUZA       = 70
 PAGO_ESPECIAL      = 2
 PAGO_TRIPLETA      = 60
 COMISION_AGENCIA   = 0.15
-MINUTOS_BLOQUEO    = 2
+MINUTOS_BLOQUEO    = 5
 
 HORARIOS_PERU = [
-    "09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM",
-    "02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM","07:00 PM"
+    "08:00 AM","09:00 AM","10:00 AM","11:00 AM","12:00 PM",
+    "01:00 PM","02:00 PM","03:00 PM","04:00 PM","05:00 PM","06:00 PM"
 ]
 HORARIOS_VENEZUELA = [
     "09:00 AM","10:00 AM","11:00 AM","12:00 PM","01:00 PM",
@@ -2022,7 +2022,6 @@ function cargarTrip(){
     let html='';
     d.tripletas.forEach(tr=>{
       let salStr=tr.salieron&&tr.salieron.length?tr.salieron.join(' • '):'Ninguno aún';
-      let pend=3-tr.salieron.length;
       let bordCol=tr.gano?'#22c55e':'#7c3aed';
       let bgCol=tr.gano?'#040f08':'#0d0620';
       html+=`<div style="padding:12px;margin:5px 0;background:${bgCol};border-left:4px solid ${bordCol};border-radius:4px;border:1px solid ${tr.gano?'#166534':'#3b0764'}">
@@ -2331,6 +2330,6 @@ def reporte_agencias_rango():
 
 if __name__ == '__main__':
     init_db()
-    # Render usa la variable de entorno PORT
+    # Render usa la variable de entorno PORT (corrección aplicada)
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
