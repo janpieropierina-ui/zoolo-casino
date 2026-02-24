@@ -2331,11 +2331,6 @@ def reporte_agencias_rango():
 
 if __name__ == '__main__':
     init_db()
-    port = int(os.environ.get('PORT', 5000))
-    print("="*55)
-    print("  🦁 ZOOLO CASINO v2.3 — Tripleta en Modal")
-    print("="*55)
-    print(f"  URL: http://localhost:{port}")
-    print(f"  Admin: usuario=admin  password=admin123")
-    print("="*55)
-    app.run(host='0.0.0.0', port=port, debug=False, threaded=True)
+    # Render usa la variable de entorno PORT
+    port = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
